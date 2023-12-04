@@ -11,53 +11,8 @@
     "lang": "es-MX",
     "icons": [
       {
-        "src": "img/pokebola.png",
-        "sizes": "1024x1024",
-        "type": "image/png"
-      },
-      {
         "src":"img/pokebola.png",
         "sizes": "512x512",
-        "type": "image/png"
-      },
-      {
-        "src": "img/",
-        "sizes": "384x384",
-        "type": "image/png"
-      },
-      {
-        "src":"img/",
-        "sizes": "256x256",
-        "type": "image/png"
-      },
-      {
-        "src": "img/",
-        "sizes": "192x192",
-        "type": "image/png"
-      },
-      {
-        "src": "img/",
-        "sizes": "128x128",
-        "type": "image/png"
-      },
-      {
-        "src": "img/",
-        "sizes": "96x96",
-        "type": "image/png"
-      },
-      {
-        "src": "img/",
-        "sizes": "64x64",
-        "type": "image/png"
-      },
-      {
-        "src": "img/",
-        "sizes": "32x32",
-        "type": "image/png"
-      },
-      {
-        "src": "img/",
-        "sizes": "16x16",
         "type": "image/png"
       }
     ]
