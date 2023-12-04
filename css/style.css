@@ -1,0 +1,113 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #1f2029;
+  min-height: 100%;
+  background-size: cover;
+}
+
+.titulo {
+  color: #f0db4f;
+  width: 100%;
+  text-align: center;
+}
+
+.filtros {
+  display: flex;
+  width: 100vw;
+  justify-content: space-around;
+  height: 100%;
+  flex-wrap: wrap;
+}
+.filtros > * {
+  margin: 1em;
+}
+
+[type=radio]:checked,
+[type=radio]:not(:checked) {
+  visibility: hidden;
+}
+
+[type=radio]:checked + label,
+[type=radio]:not(:checked) + label {
+  position: relative;
+  padding: 0px 10px;
+  cursor: pointer;
+  line-height: 30px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 400;
+  color: #fff;
+  margin: 0px, 10px;
+  transition: all 0.2s ease;
+  height: 25px;
+  background-color: #e74c3c;
+  border-radius: 2px;
+  z-index: 1;
+  opacity: 1;
+}
+
+[type=radio]:not(:checked) + label::before {
+  content: "";
+  width: 100%;
+  border-radius: 2px;
+  position: absolute;
+  height: 100%;
+  left: 0px;
+  border: 2px solid #e74c3c;
+  z-index: -1;
+}
+
+[type=radio]:checked + label::before {
+  background-color: #e74c3c;
+}
+
+[type=radio]:checked + label {
+  transform: translateX(1px) translateY(1px);
+  background-color: rgba(231, 76, 60, 0.7);
+  border: 1px solid rgba(231, 76, 60, 0.7);
+}
+
+.contenedor {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+.contenedor li {
+  list-style: none;
+  font-weight: 700;
+  width: 200px;
+  height: 200px;
+  color: #37393b;
+  text-align: center;
+}
+.contenedor li:hover {
+  border: 6px solid #f67c55;
+  border-radius: 15px;
+  background: linear-gradient(45deg, #f67c55, #f67c55);
+  background: linear-gradient(45deg, #f23b00, #fcd3c6);
+  color: #fff;
+}
+.contenedor li:hover .pokeimage {
+  width: 100px;
+  transition: 0.5s;
+  margin: 15px;
+  background-color: #fff;
+  box-shadow: 20px 20px 40px #faf3c4;
+  border-radius: 50%;
+  padding: 20px;
+}
+
+#icono {
+  width: 150px;
+  margin: 10px;
+}/*# sourceMappingURL=style.css.map */
