@@ -12,23 +12,50 @@ document.addEventListener("DOMContentLoaded",function(){
     }, imgOptions)
     //#endregion
 
-    const fetchPokemones = async(endpoint) =>{
-        let datos;
-        try {
-            const respuesta = await fetch(endpoint,{
-                method:"GET",
-                headers:{
-                    "Content-Type":"application/json"
-                }
+    function mostrarNotificacion(titulo, opciones) {
+        if (Notification.permission === 'granted') {
+          navigator.serviceWorker.ready
+            .then(registration => {
+              registration.showNotification(titulo, opciones);
             })
-            datos = await respuesta.json()
-
-        } catch(error){
-            console.log(error)
+            .catch(error => {
+              console.log('Error al mostrar la notificación:', error);
+            });
         }
-        return datos.pokemon_species
-    }
-
+      }
+    var logo = document.getElementById('icono')
+    logo.addEventListener('click', function(){
+        mostrarNotificacion('¡Bienvenido a mi Pokedex!', {
+            body: 'by: Fernando Gómez Landaverde',
+            icon: 'img/pokebola.png',
+        })
+    })
+    const fetchPokemones = async (endpoint, CACHE_NAME) => {
+        try {
+          
+            const cache = await caches.open(CACHE_NAME);
+          const cachedResponse = await cache.match(endpoint);
+          if (cachedResponse) {
+            const data = await cachedResponse.json();
+            return data.pokemon_species;
+          }
+          const response = await fetch(endpoint, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          if (response.ok) {
+            cache.put(endpoint, response.clone());
+            const data = await response.json();
+            return data.pokemon_species;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        return [];
+      };
+    
     function ordenarPokemones(str){
         var miSubstring = str.substring(
             str.lastIndexOf("s/")+2, str.lastIndexOf("/")
@@ -41,7 +68,8 @@ document.addEventListener("DOMContentLoaded",function(){
         var contenedor = document.getElementById("contenedor")
         contenedor.innerHTML = ""
         let pokemons = []
-        pokemons = await fetchPokemones(endpoint)
+        const CACHE_NAME = 'v1_cache_pokedex';
+        pokemons = await fetchPokemones(endpoint, CACHE_NAME)
         pokemons.forEach(pokemon => {
             pokemon.nr=ordenarPokemones(pokemon.url)
         })
@@ -87,7 +115,8 @@ document.addEventListener("DOMContentLoaded",function(){
         }
     })
     //#endregion
+
+    
 })
-if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('sw.js').then(reg => console.log('Registro de SW exitoso',reg)).catch(err => console.warn('Error al tratar de registrar el SW',err))
-}
+
+

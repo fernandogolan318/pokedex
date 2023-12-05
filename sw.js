@@ -2,10 +2,12 @@
 //asignar un nombre y versión al cache
 const CACHE_NAME = 'v1_cache_pokedex',
   urlsToCache = [
-    '/',
-    'style.css',
-    'script.js',
-    'img/pokebola.png'
+    './',
+    './style.css',
+    './script.js',
+    './img/pokebola.png',
+    'https://pokeapi.co/api/v2/generation/1',
+    'https://www.serebii.net/pokemongo/pokemon/001.shtml'
   ]
 
 //durante la fase de instalación, generalmente se almacena en caché los activos estáticos
