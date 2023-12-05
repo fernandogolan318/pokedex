@@ -11,7 +11,27 @@ document.addEventListener("DOMContentLoaded",function(){
         })
     }, imgOptions)
     //#endregion
-
+    
+    var logo = document.getElementById('icono')
+    logo.addEventListener('click', function(){
+        if ('Notification' in window && navigator.serviceWorker) {
+            Notification.requestPermission()
+              .then(permission => {
+                if (permission === 'granted') {
+                    mostrarNotificacion('¡Bienvenido a mi Pokedex!', {
+                        body: 'by: Fernando Gómez Landaverde',
+                        icon: 'img/pokebola.png',
+                    });
+                    console.log('Permiso de notificación permitido');
+                } else {
+                  console.log('Permiso de notificación denegado.');
+                }
+              })
+              .catch(error => {
+                console.log('Error al solicitar permiso de notificación:', error);
+              });
+            }
+    })
     function mostrarNotificacion(titulo, opciones) {
         if (Notification.permission === 'granted') {
           navigator.serviceWorker.ready
@@ -23,14 +43,8 @@ document.addEventListener("DOMContentLoaded",function(){
             });
         }
       }
-    var logo = document.getElementById('icono')
-    logo.addEventListener('click', function(){
-        mostrarNotificacion('¡Bienvenido a mi Pokedex!', {
-            body: 'by: Fernando Gómez Landaverde',
-            icon: 'img/pokebola.png',
-        })
-    })
-    const fetchPokemones = async (endpoint, CACHE_NAME) => {
+      
+      const fetchPokemones = async (endpoint, CACHE_NAME) => {
         try {
           
             const cache = await caches.open(CACHE_NAME);
