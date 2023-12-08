@@ -32,7 +32,9 @@ document.addEventListener("DOMContentLoaded",function(){
     }
       var logo = document.getElementById('icono');
       logo.addEventListener('click', async () => {
+       
         var title = '¡Bienvenido a mi Pokedex!';
+        alert(title);
         var options = { body: 'by: Fernando Gómez Landaverde',
         icon: 'img/pokebola.png'}
         await mostrarNotificacion(title,options);
