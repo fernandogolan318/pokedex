@@ -11,39 +11,30 @@ document.addEventListener("DOMContentLoaded",function(){
         })
     }, imgOptions)
     //#endregion
-    
-    var logo = document.getElementById('icono')
-    logo.addEventListener('click', function(){
-        if ('Notification' in window && navigator.serviceWorker) {
-            Notification.requestPermission()
-              .then(permission => {
-                if (permission === 'granted') {
-                    mostrarNotificacion('¡Bienvenido a mi Pokedex!', {
-                        body: 'by: Fernando Gómez Landaverde',
-                        icon: 'img/pokebola.png',
-                    });
-                    console.log('Permiso de notificación permitido');
-                } else {
-                  console.log('Permiso de notificación denegado.');
-                }
-              })
-              .catch(error => {
-                console.log('Error al solicitar permiso de notificación:', error);
-              });
-            }
-    })
-    function mostrarNotificacion(titulo, opciones) {
-        if (Notification.permission === 'granted') {
-          navigator.serviceWorker.ready
-            .then(registration => {
-              registration.showNotification(titulo, opciones);
-            })
-            .catch(error => {
-              console.log('Error al mostrar la notificación:', error);
-            });
+
+    async function mostrarNotificacion(titulo, opciones) {
+      try {
+        const sw = await navigator.serviceWorker.getRegistration();
+        const permission = await Notification.requestPermission();
+        if (sw && permission === 'granted') {
+        console.log(opciones.body);
+          return new Notification(titulo, opciones);
+        } else if (Notification.permission !== 'denied' && permission === 'granted') {
+          return new Notification(titulo, opciones);
         }
+      } catch (error) {
+        console.log('Error al mostrar la notificación:', error);
+        throw error; // Lanza una excepción para manejo externo
+      }
       }
       
+      var logo = document.getElementById('icono');
+      logo.addEventListener('click', async () => {
+        var title = '¡Bienvenido a mi Pokedex!';
+        var options = { body: 'by: Fernando Gómez Landaverde',
+        icon: 'img/pokebola.png'}
+        await mostrarNotificacion(title,options);
+      })
       const fetchPokemones = async (endpoint, CACHE_NAME) => {
         try {
           
