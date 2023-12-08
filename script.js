@@ -11,23 +11,25 @@ document.addEventListener("DOMContentLoaded",function(){
         })
     }, imgOptions)
     //#endregion
-
     async function mostrarNotificacion(titulo, opciones) {
       try {
-        const sw = await navigator.serviceWorker.getRegistration();
         const permission = await Notification.requestPermission();
-        if (sw && permission === 'granted') {
-        console.log(opciones.body);
-          return new Notification(titulo, opciones);
-        } else if (Notification.permission !== 'denied' && permission === 'granted') {
-          return new Notification(titulo, opciones);
+        if (permission === 'granted') {
+          if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+            navigator.serviceWorker.controller.postMessage({
+              type: 'showNotification',
+              title: titulo,
+              options: opciones
+            });
+          } else {
+            console.log('No hay Service Worker activo');
+          }
         }
       } catch (error) {
         console.log('Error al mostrar la notificación:', error);
         throw error; // Lanza una excepción para manejo externo
       }
-      }
-      
+    }
       var logo = document.getElementById('icono');
       logo.addEventListener('click', async () => {
         var title = '¡Bienvenido a mi Pokedex!';

@@ -44,16 +44,24 @@ self.addEventListener('activate', e => {
 
 //cuando el navegador recupera una url
 self.addEventListener('fetch', e => {
-  //Responder ya sea con el objeto en caché o continuar y buscar la url real
-  e.respondWith(
-    caches.match(e.request)
-      .then(res => {
-        if (res) {
-          //recuperar del cache
-          return res
-        }
-        //recuperar de la petición a la url
-        return fetch(e.request)
-      })
-  )
+  if (e.data && e.data.type === 'showNotification') {
+    const title = e.data.title;
+    const options = e.data.options;
+
+    // Mostrar la notificación
+    self.registration.showNotification(title, options);
+  } else {
+    // Responder ya sea con el objeto en caché o continuar y buscar la URL real
+    e.respondWith(
+      caches.match(e.request)
+        .then(res => {
+          if (res) {
+            // Recuperar del caché
+            return res;
+          }
+          // Recuperar de la petición a la URL
+          return fetch(e.request);
+        })
+    );
+  }
 })

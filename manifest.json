@@ -5,7 +5,9 @@
     "background_color": "#1f2029",
     "theme_color": "#e74c3c",
     "orientation": "portrait",
+    "display_override": ["fullscreen", "minimal-ui"],
     "display": "standalone",
+    "form_factor":"standalone",
     "start_url": "./?utm_source=web_app_manifest",
     "scope": "/",
     "lang": "es-MX",
@@ -27,7 +29,7 @@
       },
       {
         "src":"img/pokebola_64.png",
-        "sizes": "65x64",
+        "sizes": "64x64",
         "type": "image/png"
       },
       {
